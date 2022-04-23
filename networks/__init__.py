@@ -1,3 +1,3 @@
-from CNN import *
-from DSN import *
-from RL import *
+from networks.CNN import *
+from networks.DSN import *
+from networks.RL import *

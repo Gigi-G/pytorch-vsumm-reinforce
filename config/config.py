@@ -1,12 +1,12 @@
 # ============ TRAIN CONFIG ==============
 # Dataset options
-DATASET = 'datasets/eccv16_dataset_summe_google_pool5.h5' # path to h5 dataset (required)
+DATASET = 'output/summe_dataset.h5' # path to h5 dataset (required)
 SPLIT = 'datasets/summe_splits.json' # path to split file (required)
 SPLIT_ID = 0 # split index (default: 0)
 METRIC = 'summe' # evaluation metric ['tvsum', 'summe'])
 
 # Model options
-INPUT_DIM = 1024 # input dimension (default: 1024)
+INPUT_DIM = 2048 # input dimension (default: 1024)
 HIDDEN_DIM = 256 # hidden unit dimension of DSN (default: 256)
 NUM_LAYERS = 1 # number of RNN layers (default: 1)
 RNN_CELL = 'lstm' # RNN cell type (default: lstm)

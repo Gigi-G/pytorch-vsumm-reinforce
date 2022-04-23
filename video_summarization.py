@@ -164,21 +164,25 @@ def evaluate(model, dataset, test_keys, use_gpu):
             num_frames = dataset[key]['n_frames'][()]
             nfps = dataset[key]['n_frame_per_seg'][...].tolist()
             positions = dataset[key]['picks'][...]
-            user_summary = dataset[key]['user_summary'][...]
+            """
+                SONO STATE COMMENTATE LE RIGHE 171 - 174 - 175 - 178 - 179 - 184 - 185
+                PERCHE' NON ABBIAMO DEI VIDEO TARGET
+            """
+            #user_summary = dataset[key]['user_summary'][...]
 
             machine_summary = vsum_tool.generate_summary(probs, cps, num_frames, nfps, positions)
-            fm, _, _ = vsum_tool.evaluate_summary(machine_summary, user_summary, eval_metric)
-            fms.append(fm)
+            #fm, _, _ = vsum_tool.evaluate_summary(machine_summary, user_summary, eval_metric)
+            #fms.append(fm)
 
 
-            if config.VERBOSE:
-                table.append([key_idx+1, key, "{:.1%}".format(fm)])
+            #if config.VERBOSE:
+            #    table.append([key_idx+1, key, "{:.1%}".format(fm)])
 
             if config.SAVE_RESULTS:
                 h5_res.create_dataset(key + '/score', data=probs)
                 h5_res.create_dataset(key + '/machine_summary', data=machine_summary)
-                h5_res.create_dataset(key + '/gtscore', data=dataset[key]['gtscore'][...])
-                h5_res.create_dataset(key + '/fm', data=fm)
+                #h5_res.create_dataset(key + '/gtscore', data=dataset[key]['gtscore'][...])
+                #h5_res.create_dataset(key + '/fm', data=fm)
 
     if config.VERBOSE:
         print(tabulate(table))

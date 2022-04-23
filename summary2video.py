@@ -19,7 +19,7 @@ def frm2video(frm_dir, summary, vid_writer):
         if val == 1:
             # here frame name starts with '000001.jpg'
             # change according to your need
-            frm_name = str(idx+1).zfill(6) + '.jpg'
+            frm_name = str(idx+1).zfill(5) + '.jpg'
             frm_path = os.path.join(frm_dir, frm_name)
             frm = cv2.imread(frm_path)
             frm = cv2.resize(frm, (args.width, args.height))
@@ -35,7 +35,7 @@ if __name__ == '__main__':
         (args.width, args.height),
     )
     h5_res = h5py.File(args.path, 'r')
-    key = h5_res.keys()[args.idx]
+    key = list(h5_res.keys())[args.idx]
     summary = h5_res[key]['machine_summary'][...]
     h5_res.close()
     frm2video(args.frm_dir, summary, vid_writer)

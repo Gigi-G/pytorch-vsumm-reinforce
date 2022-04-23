@@ -1,1 +1,1 @@
-from cpd_auto import *
+from KTS.cpd_auto import *

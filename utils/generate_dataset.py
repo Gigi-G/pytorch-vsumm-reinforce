@@ -10,7 +10,7 @@
 import os, sys
 sys.path.append('../')
 from networks.CNN import ResNet
-from utils.KTS.cpd_auto import cpd_auto
+from KTS.cpd_auto import cpd_auto
 from tqdm import tqdm
 import math
 import cv2
@@ -23,7 +23,7 @@ class Generate_Dataset:
         self.dataset = {}
         self.video_list = []
         self.video_path = ''
-        self.frame_root_path = './frames'
+        self.frame_root_path = '../output/frames'
         self.h5_file = h5py.File(save_path, 'w')
 
         self._set_video_list(video_path)
@@ -142,6 +142,6 @@ class Generate_Dataset:
             self.h5_file['video_{}'.format(video_idx+1)]['n_frame_per_seg'] = n_frame_per_seg
 
 if __name__ == "__main__":
-    gen = Generate_Dataset('/data/video_summarization/dataset_SumMe/videos/Air_Force_One.mp4', 'summe_dataset.h5')
+    gen = Generate_Dataset('../datasets/sumMe/prova', '../output/summe_dataset.h5')
     gen.generate_dataset()
     gen.h5_file.close()
