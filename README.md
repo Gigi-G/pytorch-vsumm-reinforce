@@ -7,13 +7,47 @@ This repo contains the Pytorch implementation of the AAAI'18 paper - [Deep Reinf
 
 The main requirements are [pytorch](http://pytorch.org/) (`v0.4.0`) and python `2.7`. Some dependencies that may not be installed in your machine are [tabulate](https://pypi.org/project/tabulate/) and [h5py](https://github.com/h5py/h5py). Please install other missing dependencies.
 
-## TODO
-1. Edit README
-2. Reconstruct Repository
-3. ~~Add KTS(Kernel Temporal Segmentation)~~
-4. Edit code for test
+## Quick Run
+1. ```bash
+   git clone git@github.com:Gigi-G/pytorch-vsumm-reinforce.git
+   ```
+
+2. ```bash
+   cd pytorch-vsumm-reinforce
+   ```
+
+3. ```bash
+   python setup.py
+   ```
+
+4. ```bash
+   cd utils
+   ```
+
+5. ```bash
+   python generate_dataset.py
+   ```
+
+6. ```bash
+   cd ..
+   ```
+
+7. ```bash
+   python video_summarization.py
+   ```
+
+8. ```bash
+   python summary2video.py -p log/summe-split0/result.h5 -d output/frames/prova -i 0 --fps 60 --save-dir log --save-name summary.mp4
+   ```
+
+If everything is correctly installed you won't get any error.
+
+
 
 ## Get started
+
+**This is not necessary if you follow the Quick Start instructions.**
+
 1. Download preprocessed datasets
 ```bash
 git clone https://github.com/KaiyangZhou/pytorch-vsumm-reinforce
