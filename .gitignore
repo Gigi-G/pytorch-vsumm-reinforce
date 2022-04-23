@@ -1,6 +1,8 @@
 # Custom
 datasets/
 log/
+output/
+datasets.zip
 
 # OS generated files #
 ######################
