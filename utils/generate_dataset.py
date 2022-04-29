@@ -127,9 +127,7 @@ class Generate_Dataset:
                     break
 
             video_capture.release()
-
             change_points, n_frame_per_seg = self._get_change_points(video_feat, n_frames, fps)
-
             # self.dataset['video_{}'.format(video_idx+1)]['frames'] = list(frame_list)
             # self.dataset['video_{}'.format(video_idx+1)]['features'] = list(video_feat)
             # self.dataset['video_{}'.format(video_idx+1)]['picks'] = np.array(list(picks))
@@ -137,13 +135,13 @@ class Generate_Dataset:
             # self.dataset['video_{}'.format(video_idx+1)]['fps'] = fps
             # self.dataset['video_{}'.format(video_idx+1)]['change_points'] = change_points
             # self.dataset['video_{}'.format(video_idx+1)]['n_frame_per_seg'] = n_frame_per_seg
-
-            self.h5_file['video_{}'.format(video_idx+1)]['features'] = list(video_feat_for_train)
-            self.h5_file['video_{}'.format(video_idx+1)]['picks'] = np.array(list(picks))
-            self.h5_file['video_{}'.format(video_idx+1)]['n_frames'] = n_frames
-            self.h5_file['video_{}'.format(video_idx+1)]['fps'] = fps
-            self.h5_file['video_{}'.format(video_idx+1)]['change_points'] = change_points
-            self.h5_file['video_{}'.format(video_idx+1)]['n_frame_per_seg'] = n_frame_per_seg
+            frame_idx = 'video_{}'.format(video_idx+1)
+            self.h5_file[frame_idx]['features'] = list(video_feat_for_train)
+            self.h5_file[frame_idx]['picks'] = np.array(list(picks))
+            self.h5_file[frame_idx]['n_frames'] = n_frames
+            self.h5_file[frame_idx]['fps'] = fps
+            self.h5_file[frame_idx]['change_points'] = change_points
+            self.h5_file[frame_idx]['n_frame_per_seg'] = n_frame_per_seg
 
 if __name__ == "__main__":
 
