@@ -17,6 +17,8 @@ import cv2
 import numpy as np
 import h5py
 
+os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
+
 class Generate_Dataset:
     def __init__(self, video_path, save_path):
         self.resnet = ResNet()
@@ -32,6 +34,7 @@ class Generate_Dataset:
         if os.path.isdir(video_path):
             self.video_path = video_path
             self.video_list = os.listdir(video_path)
+            self.video_list = [ v for v in self.video_list if '.mp4' in v ]
             self.video_list.sort()
         else:
             self.video_path = ''
@@ -142,6 +145,7 @@ class Generate_Dataset:
             self.h5_file['video_{}'.format(video_idx+1)]['n_frame_per_seg'] = n_frame_per_seg
 
 if __name__ == "__main__":
-    gen = Generate_Dataset('../datasets/sumMe/prova', '../output/summe_dataset.h5')
+    # gen = Generate_Dataset('../datasets/sumMe/prova', '../output/summe_dataset.h5')
+    gen = Generate_Dataset('../datasets/sumMe/videos', '../output/summe_dataset.h5')
     gen.generate_dataset()
     gen.h5_file.close()
