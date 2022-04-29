@@ -20,6 +20,7 @@ import h5py
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
 class Generate_Dataset:
+
     def __init__(self, video_path, save_path):
         self.resnet = ResNet()
         self.dataset = {}
@@ -27,8 +28,8 @@ class Generate_Dataset:
         self.video_path = ''
         self.frame_root_path = '../output/frames'
         self.h5_file = h5py.File(save_path, 'w')
-
         self._set_video_list(video_path)
+
 
     def _set_video_list(self, video_path):
         if os.path.isdir(video_path):
@@ -50,8 +51,8 @@ class Generate_Dataset:
         frame = cv2.resize(frame, (224, 224))
         res_pool5 = self.resnet(frame)
         frame_feat = res_pool5.cpu().data.numpy().flatten()
-
         return frame_feat
+
 
     def _get_change_points(self, video_feat, n_frame, fps):
         n = n_frame / fps
@@ -145,7 +146,11 @@ class Generate_Dataset:
             self.h5_file['video_{}'.format(video_idx+1)]['n_frame_per_seg'] = n_frame_per_seg
 
 if __name__ == "__main__":
-    # gen = Generate_Dataset('../datasets/sumMe/prova', '../output/summe_dataset.h5')
-    gen = Generate_Dataset('../datasets/sumMe/videos', '../output/summe_dataset.h5')
+
+    DEBUG = False
+    if len(sys.argv) > 1 and sys.argv[1] == '--debug': DEBUG = True
+    video_path = '../datasets/sumMe/prova' if DEBUG else '../datasets/sumMe/videos' 
+    
+    gen = Generate_Dataset(video_path, '../output/summe_dataset.h5')
     gen.generate_dataset()
     gen.h5_file.close()
