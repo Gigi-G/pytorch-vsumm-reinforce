@@ -16,6 +16,8 @@ import math
 import cv2
 import numpy as np
 import h5py
+from modules.extract_video_duration import ExtractVideoDuration
+from generate_user_sum import build_frame_binary_array, extract_action_frames
 
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 
@@ -25,6 +27,7 @@ class Generate_Dataset:
         self.resnet = ResNet()
         self.dataset = {}
         self.video_list = []
+        self.csv_list = []
         self.video_path = ''
         self.frame_root_path = '../output/frames'
         self.h5_file = h5py.File(save_path, 'w')
@@ -36,10 +39,14 @@ class Generate_Dataset:
             self.video_path = video_path
             self.video_list = os.listdir(video_path)
             self.video_list = [ v for v in self.video_list if '.mp4' in v ]
+            self.csv_list = os.listdir(video_path)
+            self.csv_list = [ c for c in self.csv_list if '.csv' in c ]
             self.video_list.sort()
+            self.csv_list.sort()
         else:
             self.video_path = ''
             self.video_list.append(video_path)
+            self.csv_list.append(video_path.replace("export", "tracking"))
 
         for idx, file_name in enumerate(self.video_list):
             self.dataset['video_{}'.format(idx+1)] = {}
@@ -85,8 +92,10 @@ class Generate_Dataset:
     def generate_dataset(self):
         for video_idx, video_filename in enumerate(tqdm(self.video_list)):
             video_path = video_filename
+            csv_path = self.csv_list[video_idx]
             if os.path.isdir(self.video_path):
                 video_path = os.path.join(self.video_path, video_filename)
+                csv_path = os.path.join(self.video_path, csv_path)
 
             video_basename = os.path.basename(video_path).split('.')[0]
 
@@ -142,12 +151,15 @@ class Generate_Dataset:
             self.h5_file[frame_idx]['fps'] = fps
             self.h5_file[frame_idx]['change_points'] = change_points
             self.h5_file[frame_idx]['n_frame_per_seg'] = n_frame_per_seg
+            nframes:int = ExtractVideoDuration.get_duration(video_path)/60
+            user_summ = build_frame_binary_array(nframes, extract_action_frames(csv_path))
+            self.h5_file[frame_idx]['user_summary'] = user_summ
 
 if __name__ == "__main__":
 
     DEBUG = False
     if len(sys.argv) > 1 and sys.argv[1] == '--debug': DEBUG = True
-    video_path = '../datasets/sumMe/prova' if DEBUG else '../datasets/sumMe/videos' 
+    video_path = '../datasets/sumMe/prova' if DEBUG else '../datasets/sumMe/video' 
     
     gen = Generate_Dataset(video_path, '../output/summe_dataset.h5')
     gen.generate_dataset()
