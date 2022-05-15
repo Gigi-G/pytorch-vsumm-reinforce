@@ -1,5 +1,6 @@
 import sys
 import numpy as np
+from modules.extract_video_duration import ExtractVideoDuration
 
 def extract_action_frames(path):
     """ Ritorna la lista degli indici dei frame in cui 
@@ -25,9 +26,11 @@ def build_frame_binary_array(nframes, action_frames):
 if __name__ == '__main__': 
 
     if len(sys.argv) != 3:
-        print("error, usage: python generate_user_sum.py <file_with_summaries.csv> <nframes>")
+        print("error, usage: python generate_user_sum.py <video.mp4> <file_with_summaries.csv>")
+        sys.exit(-1)
 
-    _, path, nframes = sys.argv 
+    _, video, path = sys.argv 
     
-    user_summ = build_frame_binary_array(int(nframes), extract_action_frames(path))
+    nframes:int = ExtractVideoDuration.get_duration(video)/60
+    user_summ = build_frame_binary_array(nframes, extract_action_frames(path))
     print(user_summ)
