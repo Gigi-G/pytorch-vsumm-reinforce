@@ -166,7 +166,7 @@ def evaluate(model, dataset, test_keys, use_gpu):
             positions = dataset[key]['picks'][...]
             user_summary = dataset[key]['user_summary'][...]
             machine_summary = vsum_tool.generate_summary(probs, cps, num_frames, nfps, positions)
-            fm, _, _ = vsum_tool.evaluate_summary(machine_summary, user_summary, eval_metric)
+            fm, _, _ = vsum_tool.evaluate_summary(machine_summary, np.array([user_summary]), eval_metric)
             fms.append(fm)
 
 
