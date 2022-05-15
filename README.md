@@ -32,6 +32,10 @@ The main requirements are [pytorch](http://pytorch.org/) (`v0.4.0`) and python `
    cd ..
    ```
 
+6. ```bash
+   python create_split.py -d output/summe_new.h5 --save-dir datasets --save-name summe_splits --num-splits 5
+   ```
+
 7. ```bash
    python video_summarization.py
    ```
