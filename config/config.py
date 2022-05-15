@@ -1,6 +1,6 @@
 # ============ TRAIN CONFIG ==============
 # Dataset options
-DATASET = 'output/summe_dataset.h5' # path to h5 dataset (required)
+DATASET = 'output/summe_new.h5' # path to h5 dataset (required)
 SPLIT = 'datasets/summe_splits.json' # path to split file (required)
 SPLIT_ID = 0 # split index (default: 0)
 METRIC = 'summe' # evaluation metric ['tvsum', 'summe'])
