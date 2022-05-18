@@ -153,6 +153,7 @@ class Generate_Dataset:
             self.h5_file[frame_idx]['n_frame_per_seg'] = n_frame_per_seg
             user_summ = build_frame_binary_array(n_frames, extract_action_frames(csv_path))
             self.h5_file[frame_idx]['user_summary'] = user_summ
+            self.h5_file[frame_idx]['gtscore'] = [float(val) for val in user_summ]
 
 if __name__ == "__main__":
 
