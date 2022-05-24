@@ -33,7 +33,7 @@ class ResNet(nn.Module):
         resnet.eval()
 
         module_list = list(resnet.children())
-        self.conv5 = nn.Sequential(*module_list[: -2])
+        self.conv5 = nn.Sequential(*module_list[: -3])
         self.pool5 = module_list[-2]
 
     # rescale and normalize image, then pass it through ResNet
