@@ -111,14 +111,16 @@ class Generate_Dataset:
             picks = []
             video_feat = None
             video_feat_for_train = None
+            gtscore = []
+            user_summ = build_frame_binary_array(n_frames, extract_action_frames(csv_path))
             for frame_idx in tqdm(range(n_frames-1)):
                 success, frame = video_capture.read()
                 if success:
                     frame_feat = self._extract_feature(frame)
 
-                    if frame_idx % 15 == 0:
+                    if frame_idx % 15 == 0: #indice gtscore
                         picks.append(frame_idx)
-
+                        gtscore.append(user_summ[frame_idx])
                         if video_feat_for_train is None:
                             video_feat_for_train = frame_feat
                         else:
@@ -151,16 +153,15 @@ class Generate_Dataset:
             self.h5_file[frame_idx]['fps'] = fps
             self.h5_file[frame_idx]['change_points'] = change_points
             self.h5_file[frame_idx]['n_frame_per_seg'] = n_frame_per_seg
-            user_summ = build_frame_binary_array(n_frames, extract_action_frames(csv_path))
             self.h5_file[frame_idx]['user_summary'] = user_summ
-            self.h5_file[frame_idx]['gtscore'] = [float(val) for val in user_summ]
+            self.h5_file[frame_idx]['gtscore'] = gtscore
 
 if __name__ == "__main__":
 
     DEBUG = False
     if len(sys.argv) > 1 and sys.argv[1] == '--debug': DEBUG = True
-    video_path = '../datasets/sumMe/prova' if DEBUG else '../datasets/sumMe/video' 
+    video_path = '../datasets/sumMe/prova2' if DEBUG else '../datasets/sumMe/video' 
     
-    gen = Generate_Dataset(video_path, '../output/summe_dataset.h5')
+    gen = Generate_Dataset(video_path, '../output/summe_dataset_prova2.h5')
     gen.generate_dataset()
     gen.h5_file.close()

@@ -11,7 +11,7 @@ def extract_action_frames(path):
         action_frames = []
         for line in lines:
             frame = line.split(',')[0]
-            action_frames.append(int(frame))
+            action_frames.append(int(frame)/2)
         return action_frames
 
 
