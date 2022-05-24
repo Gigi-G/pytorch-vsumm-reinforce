@@ -167,6 +167,7 @@ def evaluate(model, dataset, test_keys, use_gpu):
             user_summary = dataset[key]['user_summary'][...]
             machine_summary = vsum_tool.generate_summary(probs, cps, num_frames, nfps, positions)
             fm, _, _ = vsum_tool.evaluate_summary(machine_summary, np.array([user_summary]), eval_metric)
+            #fm, _, _ = vsum_tool.evaluate_summary(machine_summary, user_summary, eval_metric)
             fms.append(fm)
 
 
@@ -177,7 +178,7 @@ def evaluate(model, dataset, test_keys, use_gpu):
                 h5_res.create_dataset(key + '/score', data=probs)
                 h5_res.create_dataset(key + '/machine_summary', data=machine_summary)
                 # Non è presente il gt_score
-                #h5_res.create_dataset(key + '/gtscore', data=dataset[key]['gtscore'][...])
+                h5_res.create_dataset(key + '/gtscore', data=dataset[key]['gtscore'][...])
                 h5_res.create_dataset(key + '/fm', data=fm)
 
     if config.VERBOSE:
